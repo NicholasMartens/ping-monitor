@@ -2,13 +2,14 @@ const https = require("https");
 const fs = require("fs");
 require("dotenv").config();
 
-const url = process.env.API_URL;
+const URL = process.env.API_URL;
+const INTERVAL = process.env.API_URL || 60000;
 
 function logResponseTime() {
   const startTime = Date.now();
 
   https
-    .get(url, (res) => {
+    .get(URL, (res) => {
       const endTime = Date.now();
       const responseTime = endTime - startTime;
 
@@ -28,8 +29,8 @@ function logResponseTime() {
     });
 }
 
-if (url) {
-  setInterval(logResponseTime, 60000);
+if (URL) {
+  setInterval(logResponseTime, INTERVAL);
 } else {
   console.error(
     "API_URL is not set in the environment variables. Interval not started."
